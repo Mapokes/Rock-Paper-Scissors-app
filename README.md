@@ -1,6 +1,6 @@
 # Rock-Paper-Scissors app
 
-This is a solution to the [Rock, Paper, Scissors challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/rock-paper-scissors-game-pTgwgvgH).
+This is solution by Mapokes to the [Rock, Paper, Scissors challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/rock-paper-scissors-game-pTgwgvgH).
 
 ## Table of contents
 
@@ -45,5 +45,4 @@ Users should be able to:
 
 Solution made by Mapokes
 
-- Website - https://github.com/Mapokes
-- Frontend Mentor - https://www.frontendmentor.io/profile/Mapokes
+- Github - https://github.com/Mapokes
