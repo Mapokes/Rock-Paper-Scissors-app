@@ -28,8 +28,8 @@ Users should be able to:
 
 ### Links
 
-- Live Site URL: [netlify]()
-- Live Site URL: [gh-pages]()
+- Live Site URL: [netlify](https://mellifluous-heliotrope-57f49e.netlify.app/)
+- Live Site URL: [gh-pages](https://mapokes.github.io/Rock-Paper-Scissors-app/)
 
 ## My process
 
