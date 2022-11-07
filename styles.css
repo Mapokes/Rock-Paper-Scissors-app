@@ -1,0 +1,640 @@
+:root {
+  /* PRIMARY COLORS */
+  --border-clr-scissors: linear-gradient(hsl(39, 89%, 49%), hsl(40, 84%, 53%));
+  --border-clr-paper: linear-gradient(hsl(230, 89%, 62%), hsl(230, 89%, 65%));
+  --border-clr-rock: linear-gradient(hsl(349, 71%, 52%), hsl(349, 70%, 56%));
+  --shadow-clr-paper: hsla(230, 76%, 47%, 0.6);
+  --shadow-clr-scissors: hsla(39, 81%, 30%, 0.6);
+  --shadow-clr-rock: hsla(349, 86%, 22%, 0.6);
+
+  /* NEUTRAL COLORS */
+  --clr-text-dark: hsl(229, 25%, 31%);
+  --clr-text-score: hsl(229, 64%, 46%);
+  --clr-header-outline: hsl(217, 16%, 45%);
+  --clr-white: hsl(0, 0%, 100%);
+  --clr-border-gray: hsla(0, 0%, 80%, 0.6);
+  --clr-shadow-winner: 229, 25%, 31%;
+
+  /* BACKGROUND COLOR */
+  --bg-site-color: linear-gradient(hsl(214, 47%, 23%), hsl(237, 49%, 15%));
+  --bg-site-color-darkend: linear-gradient(hsl(214, 47%, 15%), hsl(238, 48%, 5%));
+
+  /* BACKGROUND IMG */
+  --bg-triangle: url(/images/bg-triangle.svg);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Barlow Semi Condensed", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-image: var(--bg-site-color);
+  padding: 20px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  max-width: 576px;
+  width: 100%;
+  max-height: 750px;
+}
+
+.result-section,
+.rules-container {
+  display: none;
+}
+
+/* for closing rules container */
+#background-overlay {
+  background-color: transparent;
+  position: fixed;
+  inset: 0 0 0 0;
+  display: block;
+  z-index: 1;
+}
+
+/* ================================= 
+HEADER STYLES
+==================================== */
+
+#site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 10px;
+  outline: 5px solid var(--clr-header-outline);
+}
+
+#title-side {
+  flex-basis: 70%;
+}
+
+#logo-img {
+  padding: 10px;
+  max-width: 70%;
+}
+
+#score-side {
+  flex-basis: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 116px;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  background-color: var(--clr-white);
+}
+
+#score-side p {
+  color: var(--clr-text-score);
+  letter-spacing: 2px;
+  text-align: center;
+  line-height: clamp(2rem, 8vw, 2.5rem);
+}
+
+#score-side span {
+  color: var(--clr-text-dark);
+  letter-spacing: normal;
+  font-weight: 700;
+  font-size: clamp(2rem, 9vw + 1rem, 4rem);
+}
+
+/* ================================= 
+SECTION STYLES
+==================================== */
+
+.site-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin-top: 100px;
+}
+
+#hands-triangle {
+  display: grid;
+  grid-template-areas:
+    "alias-paper alias-scissors"
+    "alias-rock alias-rock";
+  max-width: 313px;
+  max-height: 278px;
+  width: 100%;
+  height: 100%;
+  background-image: var(--bg-triangle);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  z-index: 2;
+}
+
+.hand-button {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 100px;
+  aspect-ratio: 1;
+  position: relative;
+}
+
+.inner-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: var(--clr-white);
+  border-top: 5px solid var(--clr-border-gray);
+}
+
+.outer-circle {
+  position: absolute;
+  z-index: -1;
+  width: 130px;
+  aspect-ratio: 1;
+  top: -15px;
+  border-radius: 50%;
+}
+
+#paper .outer-circle {
+  background: var(--border-clr-paper);
+  border-bottom: 5px solid var(--shadow-clr-paper);
+}
+
+#scissors .outer-circle {
+  background: var(--border-clr-scissors);
+  border-bottom: 5px solid var(--shadow-clr-scissors);
+}
+
+#rock .outer-circle {
+  background: var(--border-clr-rock);
+  border-bottom: 5px solid var(--shadow-clr-rock);
+}
+
+#paper {
+  grid-area: alias-paper;
+  justify-self: left;
+  top: -45px;
+}
+
+#scissors {
+  grid-area: alias-scissors;
+  justify-self: right;
+  top: -45px;
+}
+
+#rock {
+  grid-area: alias-rock;
+  justify-self: center;
+  top: 25px;
+}
+
+#rules-btn {
+  align-self: center;
+  padding: 10px 50px;
+  background: none;
+  border: 1px solid var(--clr-white);
+  border-radius: 5px;
+  color: var(--clr-white);
+  letter-spacing: 2px;
+  z-index: 10;
+}
+
+/* ================================= 
+RULES STYLES
+==================================== */
+
+body.rules-active {
+  background-image: none;
+  background-color: var(--clr-white);
+}
+
+main.rules-active {
+  display: none;
+}
+
+.rules-container.active {
+  display: grid;
+  grid-template-rows: minmax(fit-content, 200px) 1fr 50px;
+  grid-template-areas:
+    "alias-rules-title"
+    "alias-rules-img"
+    "alias-close-btn";
+  max-height: 750px;
+  z-index: 10;
+}
+
+.rules-container h1 {
+  grid-area: alias-rules-title;
+  align-self: center;
+  text-align: center;
+  color: var(--clr-text-dark);
+}
+
+#rules-img {
+  grid-area: alias-rules-img;
+  max-width: 100%;
+}
+
+#close-btn {
+  grid-area: alias-close-btn;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  background: none;
+  border: none;
+}
+
+/* ================================= 
+RESULT STYLES
+==================================== */
+
+.site-section.result {
+  display: none;
+}
+
+.result-section.result {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "alias-player-pick alias-house-pick"
+    "alias-result alias-result";
+  margin-top: 150px;
+}
+
+#player-pick {
+  grid-area: alias-player-pick;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  order: 1;
+}
+
+#player-pick h2,
+#house-pick h2 {
+  white-space: nowrap;
+  order: 2;
+  margin-top: 40px;
+  font-size: clamp(0.8rem, 3vw + 0.3rem, 1.2rem);
+  color: var(--clr-white);
+  letter-spacing: 2px;
+}
+
+#result {
+  grid-area: alias-result;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  font-size: 2rem;
+  color: var(--clr-white);
+  z-index: 10;
+}
+
+#play-again-btn {
+  padding: 20px 80px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  border: none;
+  border-radius: 10px;
+  background: var(--clr-white);
+  color: var(--clr-text-dark);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+#house-pick {
+  grid-area: alias-house-pick;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  order: 1;
+}
+
+/* WINNER */
+
+.hand-button.result {
+  top: auto !important;
+}
+
+/* ================================= 
+ACTIVE STATES STYLES
+==================================== */
+
+#hands-triangle .hand-button:hover {
+  cursor: pointer;
+}
+
+#hands-triangle .hand-button:hover img {
+  transition: ease 200ms;
+  transform: scale(1.3);
+}
+
+#rules-btn:hover,
+#close-btn:hover,
+#play-again-btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+/* ================================= 
+ANIMATIONS
+==================================== */
+
+@keyframes game-result {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mobile-winner-shadow {
+  from {
+    box-shadow: 0 0 0 0 hsla(var(--clr-shadow-winner), 0.3), 0 0 0 0 hsla(var(--clr-shadow-winner), 0.2), 0 0 0 0 hsla(var(--clr-shadow-winner), 0.1);
+  }
+  to {
+    box-shadow: 0 0 0 20px hsla(var(--clr-shadow-winner), 0.3), 0 0 0 40px hsla(var(--clr-shadow-winner), 0.2), 0 0 0 80px hsla(var(--clr-shadow-winner), 0.1);
+  }
+}
+
+#result {
+  animation-name: game-result;
+  animation-duration: 1s;
+}
+
+.winner .hand-button::before {
+  animation-name: mobile-winner-shadow;
+  animation-duration: 500ms;
+  /* stops animation at last frame */
+  animation-fill-mode: forwards;
+}
+
+/* ================================= 
+MEDIA QUERIES
+==================================== */
+
+@media (min-width: 577px) {
+  main {
+    max-width: 1200px;
+  }
+
+  #site-header {
+    align-self: center;
+    max-width: 750px;
+    width: 100%;
+  }
+
+  #logo-img {
+    max-width: 100%;
+  }
+
+  #rules-btn {
+    align-self: flex-end;
+  }
+
+  /* ================================= 
+  DESKTOP SECTION STYLES
+  ==================================== */
+
+  #hands-triangle {
+    max-width: 413px;
+    max-height: 378px;
+  }
+
+  .hand-button {
+    width: 150px;
+  }
+
+  .hand-button img {
+    width: 50%;
+  }
+
+  .outer-circle {
+    width: 190px;
+    top: -20px;
+  }
+
+  #paper {
+    left: -20px;
+  }
+
+  #scissors {
+    right: -20px;
+  }
+
+  #rock {
+    top: 35px;
+  }
+
+  /* ================================= 
+  RULES DESKTOP
+  ==================================== */
+
+  body.rules-active {
+    background-image: var(--bg-site-color-darkend);
+  }
+
+  main.rules-active {
+    display: flex;
+    filter: brightness(60%);
+  }
+
+  .rules-container.active {
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "alias-rules-title alias-close-btn"
+      "alias-rules-img alias-rules-img";
+    padding: 30px;
+    position: absolute;
+    z-index: 10;
+    background-color: var(--clr-white);
+    border-radius: 10px;
+  }
+
+  .rules-container h1 {
+    justify-self: start;
+  }
+
+  #close-btn {
+    justify-self: end;
+  }
+
+  #rules-img {
+    margin-top: 50px;
+  }
+
+  /* ================================= 
+  RESULT DESKTOP
+  ==================================== */
+
+  .site-section.result {
+    display: none;
+  }
+
+  .result-section.result {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "alias-player-pick alias-result alias-house-pick";
+    align-self: center;
+    max-width: 750px;
+    min-height: 350px;
+    width: 100%;
+    margin-top: 150px;
+  }
+
+  .hand-button {
+    order: 2;
+  }
+
+  #player-pick h2,
+  #house-pick h2 {
+    order: 1;
+    margin-top: 0;
+    margin-bottom: 50px;
+  }
+
+  #result {
+    text-align: center;
+  }
+
+  #play-again-btn {
+    margin-top: 10px;
+    padding: 10px 60px;
+  }
+
+  #rules-btn {
+    margin-top: 50px;
+  }
+
+  /* WINNER */
+
+  .hand-button.result {
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+  }
+
+  /* ================================= 
+  ANIMATIONS DESKTOP
+  ==================================== */
+
+  @keyframes desktop-winner-shadow {
+    from {
+      box-shadow: 0 0 0 0 hsla(var(--clr-shadow-winner), 0.3), 0 0 0 0 hsla(var(--clr-shadow-winner), 0.2), 0 0 0 0 hsla(var(--clr-shadow-winner), 0.1);
+    }
+    to {
+      box-shadow: 0 0 0 40px hsla(var(--clr-shadow-winner), 0.3), 0 0 0 90px hsla(var(--clr-shadow-winner), 0.2), 0 0 0 150px hsla(var(--clr-shadow-winner), 0.1);
+    }
+  }
+
+  .winner .hand-button::before {
+    animation-name: desktop-winner-shadow;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+  }
+
+  /* PLAYER HAND ANIMATION POSITIONING */
+
+  @keyframes ani-paper-position-player {
+    from {
+      transform: translateX(100px) translateY(-100px);
+    }
+    to {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  #player-pick #paper {
+    animation-name: ani-paper-position-player;
+    animation-duration: 0.5s;
+  }
+
+  @keyframes ani-scissors-position-player {
+    from {
+      transform: translateX(300px) translateY(-50px);
+    }
+    to {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  #player-pick #scissors {
+    animation-name: ani-scissors-position-player;
+    animation-duration: 0.5s;
+  }
+
+  @keyframes ani-rock-position-player {
+    from {
+      transform: translateX(200px) translateY(50px);
+    }
+    to {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  #player-pick #rock {
+    animation-name: ani-rock-position-player;
+    animation-duration: 0.5s;
+  }
+
+  /* HOUSE HAND ANIMATION POSITIONING */
+
+  @keyframes ani-paper-position-house {
+    from {
+      transform: translateX(-400px) translateY(-150px);
+    }
+    to {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  #house-pick #paper {
+    animation-name: ani-paper-position-house;
+    animation-duration: 0.5s;
+  }
+
+  @keyframes ani-scissors-position-house {
+    from {
+      transform: translateX(-100px) translateY(-150px);
+    }
+    to {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  #house-pick #scissors {
+    animation-name: ani-scissors-position-house;
+    animation-duration: 0.5s;
+  }
+
+  @keyframes ani-rock-position-house {
+    from {
+      transform: translateX(-250px) translateY(100px);
+    }
+    to {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  #house-pick #rock {
+    animation-name: ani-rock-position-house;
+    animation-duration: 0.5s;
+  }
+}
