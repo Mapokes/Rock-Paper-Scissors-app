@@ -20,7 +20,7 @@
   --bg-site-color-darkend: linear-gradient(hsl(214, 47%, 15%), hsl(238, 48%, 5%));
 
   /* BACKGROUND IMG */
-  --bg-triangle: url(/images/bg-triangle.svg);
+  --bg-triangle: url(./images/bg-triangle.svg);
 }
 
 *,
